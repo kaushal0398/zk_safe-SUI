@@ -1,9 +1,0 @@
-[package]
-name = "zk_safe"
-version = "0.1.0"
-edition = "2023"
-
-[dependencies]
-
-[workspace]
-members = ["src"]

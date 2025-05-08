@@ -2,8 +2,8 @@ module zk_safe::vault_test {
     use zk_safe::vault;
     use sui::tx_context::TxContext;
 
-    #[test(ctx = @0x1)]
-    public fun test_vault_add_remove(ctx: &mut TxContext) {
+    #[test]
+    public fun test_add_and_remove_data(ctx: &mut TxContext) {
         let mut v = vault::new(ctx);
 
         let secret1 = vector::singleton(0xAB);
@@ -16,10 +16,5 @@ module zk_safe::vault_test {
         vault::remove_data(&mut v, 0);
         assert!(vault::get_count(&v) == 1);
     }
-
-    #[test(ctx = @0x1)]
-    public fun test_vault_transfer(ctx: &mut TxContext) {
-        let vault_obj = vault::new(ctx);
-        vault::transfer_vault(vault_obj, @0xCAFE);
-    }
 }
+

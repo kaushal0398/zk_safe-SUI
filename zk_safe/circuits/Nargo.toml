@@ -1,0 +1,8 @@
+[package]
+name = "circuits"
+type = "bin"
+authors = [""]
+version = "0.1.0"
+
+[dependencies]
+poseidon2 = { path = "../noir_stdlib/src/hash" }

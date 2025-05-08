@@ -1,0 +1,5 @@
+[package]
+name = "poseidon2"
+type = "lib"
+authors = [""]
+version = "0.1.0"
