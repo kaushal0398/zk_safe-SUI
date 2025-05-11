@@ -1,8 +1,6 @@
 module zk_safe::vault {
-    use sui::object::{UID, Self};
-    use sui::tx_context::{TxContext, sender};
-    use std::vector;
-    use sui::transfer;
+    use sui::object::new;
+    use sui::tx_context::sender;
 
     public struct Vault has key, store {
         id: UID,
@@ -11,7 +9,7 @@ module zk_safe::vault {
 
     public entry fun create(ctx: &mut TxContext) {
         let vault = Vault {
-            id: object::new(ctx),
+            id: new(ctx),
             unlocked: false,
         };
         transfer::transfer(vault, sender(ctx));
@@ -25,10 +23,25 @@ module zk_safe::vault {
             160u8, 255u8, 21u8, 78u8, 77u8, 2u8, 23u8, 7u8
         ];
 
-        if (!vector::content_equal(&pub_input, &expected)) {
-            abort 0xBAD;
-        };
+        assert!(vector::length(&pub_input) == vector::length(&expected), 0xBAD);
+
+        let len = vector::length(&pub_input);
+        let mut i = 0;
+        while (i < len) {
+        let a = *vector::borrow(&pub_input, i);
+        let b = *vector::borrow(&expected, i);
+        assert!(a == b, 0xBAD);
+        i = i + 1;
+    };
 
         v.unlocked = true;
     }
-} 
+
+    // For unit testing
+    public fun test_create(ctx: &mut TxContext): Vault {
+        Vault {
+            id: new(ctx),
+            unlocked: false,
+        }
+    }
+}
