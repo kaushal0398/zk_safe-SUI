@@ -1,3 +1,4 @@
+import { groth16 } from "snarkjs";
 import fs from "fs";
 
 export async function generateProof(inputPath = "input.json") {
